@@ -132,7 +132,7 @@ export default function ItemQuiz() {
     return isCorrect(row, col);
   }).length;
 
-  const totalCells = 9 * 9;
+  const totalCells = 8 * 8;
 
   return (
     <div className="item-quiz">
