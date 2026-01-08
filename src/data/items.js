@@ -18,8 +18,8 @@ export const baseItems = [
 export const combinedItems = {
   // B.F.ソード (0) の組み合わせ
   '0-0': { id: 'deathblade', name: 'デスブレード', icon: 'deathblade.png', components: ['bfsword', 'bfsword'], hiragana: 'ですぶれーど', romaji: 'desuburedo' },
-  '0-1': { id: 'giantslayer', name: 'ジャイアントスレイヤー', icon: 'giantslayer.png', components: ['bfsword', 'recurvebow'], hiragana: 'じゃいあんとすれいやー', romaji: 'jaiansutosureiya' },
-  '0-2': { id: 'edgeofnight', name: 'エッジ オブ ナイト', icon: 'edgeofnight.png', components: ['bfsword', 'chainvest'], hiragana: 'えっじおぶないと', romaji: 'ejjiobunaito' },
+  '0-1': { id: 'giantslayer', name: 'ジャイアント スレイヤー', icon: 'giantslayer.png', components: ['bfsword', 'recurvebow'], hiragana: 'じゃいあんとすれいやー', romaji: 'jaiansutosureiya' },
+  '0-2': { id: 'edgeofnight', name: 'ナイト エッジ', icon: 'edgeofnight.png', components: ['bfsword', 'chainvest'], hiragana: 'ないとえっじ', romaji: 'naitoejji' },
   '0-3': { id: 'bloodthirster', name: 'ブラッドサースター', icon: 'bloodthirster.png', components: ['bfsword', 'negatroncloak'], hiragana: 'ぶらっどさーすたー', romaji: 'buraddosasuta' },
   '0-4': { id: 'hextechgunblade', name: 'ヘクステック ガンブレード', icon: 'hextechgunblade.png', components: ['bfsword', 'needlesslylargerod'], hiragana: 'へくすてっくがんぶれーど', romaji: 'hekusutekkuganburedo' },
   '0-5': { id: 'spearofshojin', name: 'ショウジンの矛', icon: 'spearofshojin.png', components: ['bfsword', 'tear'], hiragana: 'しょうじんのほこ', romaji: 'shoujinnohoko' },
@@ -27,12 +27,12 @@ export const combinedItems = {
   '0-7': { id: 'infinityedge', name: 'インフィニティ エッジ', icon: 'infinityedge.png', components: ['bfsword', 'sparringgloves'], hiragana: 'いんふぃにてぃえっじ', romaji: 'infinitiejji' },
 
   // リカーブ ボウ (1) の組み合わせ
-  '1-0': { id: 'giantslayer', name: 'ジャイアントスレイヤー', icon: 'giantslayer.png', components: ['recurvebow', 'bfsword'], hiragana: 'じゃいあんとすれいやー', romaji: 'jaiansutosureiya' },
+  '1-0': { id: 'giantslayer', name: 'ジャイアント スレイヤー', icon: 'giantslayer.png', components: ['recurvebow', 'bfsword'], hiragana: 'じゃいあんとすれいやー', romaji: 'jaiansutosureiya' },
   '1-1': { id: 'guinsoosrageblade', name: 'グインソー レイジブレード', icon: 'guinsoosrageblade.png', components: ['recurvebow', 'recurvebow'], hiragana: 'ぐいんそーれいじぶれーど', romaji: 'guinsorejjiburedo' },
-  '1-2': { id: 'titanichydra', name: 'タイタニック ハイドラ', icon: 'titanichydra.png', components: ['recurvebow', 'chainvest'], hiragana: 'たいたにっくはいどら', romaji: 'taitanikkuhaidora' },
-  '1-3': { id: 'runaanshurricane', name: 'ルナーン ハリケーン', icon: 'runaanshurricane.png', components: ['recurvebow', 'negatroncloak'], hiragana: 'るなーんはりけーん', romaji: 'runanhariken' },
+  '1-2': { id: 'titanichydra', name: 'ジ＝ロット ポータル', icon: 'titanichydra.png', components: ['recurvebow', 'chainvest'], hiragana: 'じろっとぽーたる', romaji: 'jirottopotaru' },
+  '1-3': { id: 'runaanshurricane', name: 'クラーケンの怒り', icon: 'runaanshurricane.png', components: ['recurvebow', 'negatroncloak'], hiragana: 'くらーけんのいかり', romaji: 'kurakennoikari' },
   '1-4': { id: 'nashtorstooth', name: 'ナッシャー トゥース', icon: 'nashtorstooth.png', components: ['recurvebow', 'needlesslylargerod'], hiragana: 'なっしゃーとぅーす', romaji: 'nasshatosu' },
-  '1-5': { id: 'statikkshiv', name: 'スタティック シヴ', icon: 'statikkshiv.png', components: ['recurvebow', 'tear'], hiragana: 'すたてぃっくしゔ', romaji: 'sutateikkushivu' },
+  '1-5': { id: 'statikkshiv', name: 'ヴォイド スタッフ', icon: 'statikkshiv.png', components: ['recurvebow', 'tear'], hiragana: 'ゔぉいどすたっふ', romaji: 'voidosutaffu' },
   '1-6': { id: 'redsnifferscopulatorbuff', name: 'レッド バフ', icon: 'redsnifferscopulatorbuff.png', components: ['recurvebow', 'giantsbelt'], hiragana: 'れっどばふ', romaji: 'reddobafu' },
   '1-7': { id: 'lastwhisper', name: 'ラスト ウィスパー', icon: 'lastwhisper.png', components: ['recurvebow', 'sparringgloves'], hiragana: 'らすとうぃすぱー', romaji: 'rasutouisupa' },
 
