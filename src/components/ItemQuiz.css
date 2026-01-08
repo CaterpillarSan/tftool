@@ -139,11 +139,7 @@
 }
 
 .selected-item span {
-  font-size: 14px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 150px;
+  display: none; /* 選択後はアイコンのみ表示 */
 }
 
 .placeholder {
@@ -155,7 +151,7 @@
   position: absolute;
   top: 100%;
   left: 0;
-  right: 0;
+  min-width: 250px; /* 選択中はアイテム名が見えるように幅を広げる */
   background-color: white;
   border: 2px solid #4CAF50;
   border-radius: 5px;
@@ -314,10 +310,6 @@
   .select-trigger {
     min-height: 40px;
     padding: 5px;
-  }
-
-  .selected-item span {
-    display: none;
   }
 
   .result-icon {
