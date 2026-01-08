@@ -94,10 +94,17 @@ export default function ItemQuiz() {
   const [showCorrect, setShowCorrect] = useState(false);
 
   const handleAnswerChange = (row, col, itemId) => {
-    setAnswers({
+    const newAnswers = {
       ...answers,
       [`${row}-${col}`]: itemId
-    });
+    };
+
+    // 対称マス(col, row)も同時に埋める
+    if (row !== col) {
+      newAnswers[`${col}-${row}`] = itemId;
+    }
+
+    setAnswers(newAnswers);
   };
 
   const checkAnswers = () => {
@@ -126,13 +133,16 @@ export default function ItemQuiz() {
     return acc;
   }, []);
 
-  // 正解数を計算
+  // 正解数を計算（重複を除外: row <= col のセルのみカウント）
   const correctCount = Object.keys(answers).filter(key => {
     const [row, col] = key.split('-').map(Number);
-    return isCorrect(row, col);
+    // 重複を除外するため、row <= col のセルのみカウント
+    return row <= col && isCorrect(row, col);
   }).length;
 
-  const totalCells = 8 * 8;
+  // 重複を除外した総セル数（対角線+上三角のみ）
+  // 8x8グリッドで row <= col のセル数: 8 + 7 + 6 + 5 + 4 + 3 + 2 + 1 = 36
+  const totalCells = (baseItems.length * (baseItems.length + 1)) / 2;
 
   return (
     <div className="item-quiz">
