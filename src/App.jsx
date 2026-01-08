@@ -1,12 +1,10 @@
 import './App.css'
+import ItemQuiz from './components/ItemQuiz'
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Hello World</h1>
-        <p>Reactへようこそ！</p>
-      </header>
+      <ItemQuiz />
     </div>
   )
 }
