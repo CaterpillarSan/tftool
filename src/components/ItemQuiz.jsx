@@ -200,18 +200,22 @@ export default function ItemQuiz() {
                           <img
                             src={getItemIcon(correctItem.icon)}
                             alt={correctItem.name}
-                            title={correctItem.name}
                             className="result-icon"
                           />
+                          <span className="item-tooltip">{correctItem.name}</span>
                           {userAnswer && !isAnswerCorrect && (
                             <div className="user-answer">
                               {allCombinedItemsList.find(i => i.id === userAnswer) && (
-                                <img
-                                  src={getItemIcon(allCombinedItemsList.find(i => i.id === userAnswer).icon)}
-                                  alt="あなたの回答"
-                                  title="あなたの回答"
-                                  className="wrong-icon"
-                                />
+                                <>
+                                  <img
+                                    src={getItemIcon(allCombinedItemsList.find(i => i.id === userAnswer).icon)}
+                                    alt="あなたの回答"
+                                    className="wrong-icon"
+                                  />
+                                  <span className="item-tooltip wrong">
+                                    {allCombinedItemsList.find(i => i.id === userAnswer).name}
+                                  </span>
+                                </>
                               )}
                             </div>
                           )}

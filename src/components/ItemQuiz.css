@@ -258,6 +258,64 @@
   opacity: 0.7;
 }
 
+/* Item Tooltip */
+.item-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.85);
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+  pointer-events: none;
+  z-index: 100;
+  margin-bottom: 5px;
+}
+
+.item-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.85);
+}
+
+.result-cell:hover .item-tooltip,
+.result-cell:active .item-tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Wrong answer tooltip */
+.user-answer .item-tooltip.wrong {
+  bottom: auto;
+  top: 100%;
+  margin-top: 5px;
+  margin-bottom: 0;
+  background-color: rgba(244, 67, 54, 0.9);
+}
+
+.user-answer .item-tooltip.wrong::after {
+  top: auto;
+  bottom: 100%;
+  border-top-color: transparent;
+  border-bottom-color: rgba(244, 67, 54, 0.9);
+}
+
+.user-answer:hover .item-tooltip.wrong,
+.user-answer:active .item-tooltip.wrong {
+  opacity: 1;
+  visibility: visible;
+}
+
 /* Responsive Design */
 @media (max-width: 1200px) {
   .items-table {
