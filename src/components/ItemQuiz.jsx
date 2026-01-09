@@ -225,7 +225,7 @@ export default function ItemQuiz() {
                           value={answers[cellKey] || ''}
                           onChange={(itemId) => handleAnswerChange(rowIndex, colIndex, itemId)}
                           items={allCombinedItemsList}
-                          placeholder="選択..."
+                          placeholder="?"
                         />
                       )}
                     </td>
