@@ -1,121 +1,10 @@
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { baseItems, combinedItems, getCodeForPair, codeToItemPairMap } from '../data/items';
+import { shuffleArray, getItemIcon } from '../utils/itemUtils';
+import SearchableSelect from './SearchableSelect';
+import QuizControls from './QuizControls';
+import QuizResultCell from './QuizResultCell';
 import './ItemQuiz.css';
-
-// 配列をシャッフルするユーティリティ関数（Fisher-Yates）
-const shuffleArray = (array) => {
-  const shuffled = [...array];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
-};
-
-// アイコンのインポート関数
-const getItemIcon = (iconName) => {
-  try {
-    return new URL(`../assets/items/${iconName}`, import.meta.url).href;
-  } catch {
-    return null;
-  }
-};
-
-// 検索可能なセレクトボックスコンポーネント
-function SearchableSelect({ value, onChange, items, placeholder, selectedItemIds = [] }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [search, setSearch] = useState('');
-  const dropdownRef = useRef(null);
-
-  // フィルタリング後、あいうえお順でソートし、選択済みアイテムは後ろに配置
-  const filteredItems = items
-    .filter(item => {
-      const searchLower = search.toLowerCase();
-      return (
-        item.name.toLowerCase().includes(searchLower) ||
-        (item.hiragana && item.hiragana.includes(searchLower)) ||
-        (item.romaji && item.romaji.toLowerCase().includes(searchLower))
-      );
-    })
-    .sort((a, b) => {
-      const aSelected = selectedItemIds.includes(a.id);
-      const bSelected = selectedItemIds.includes(b.id);
-
-      // 選択済みアイテムは後ろに
-      if (aSelected !== bSelected) {
-        return aSelected ? 1 : -1;
-      }
-
-      // 同じグループ内ではあいうえお順（hiraganaでソート）
-      const aHiragana = a.hiragana || '';
-      const bHiragana = b.hiragana || '';
-      return aHiragana.localeCompare(bHiragana, 'ja');
-    });
-
-  const selectedItem = items.find(item => item.id === value);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsOpen(false);
-        setSearch('');
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  return (
-    <div className="searchable-select" ref={dropdownRef}>
-      <div
-        className="select-trigger"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        {selectedItem ? (
-          <div className="selected-item">
-            <img src={getItemIcon(selectedItem.icon)} alt={selectedItem.name} />
-            <span>{selectedItem.name}</span>
-          </div>
-        ) : (
-          <span className="placeholder">{placeholder}</span>
-        )}
-      </div>
-
-      {isOpen && (
-        <div className="select-dropdown">
-          <input
-            type="text"
-            className="search-input"
-            placeholder="検索..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            autoFocus
-          />
-          <div className="options-list">
-            {filteredItems.map(item => {
-              const isAlreadySelected = selectedItemIds.includes(item.id);
-              return (
-                <div
-                  key={item.id}
-                  className={`option ${value === item.id ? 'selected' : ''} ${isAlreadySelected ? 'already-selected' : ''}`}
-                  onClick={() => {
-                    onChange(item.id);
-                    setIsOpen(false);
-                    setSearch('');
-                  }}
-                >
-                  <img src={getItemIcon(item.icon)} alt={item.name} />
-                  <span>{item.name}</span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
 
 export default function ItemQuiz() {
   // 各セルの回答を保存する状態（1文字コードをキーとする）
@@ -198,19 +87,13 @@ export default function ItemQuiz() {
         基本アイテムの組み合わせから作られる合成アイテムを当ててください。
       </p>
 
-      <div className="quiz-controls">
-        <button onClick={checkAnswers} className="btn-check">
-          答え合わせ
-        </button>
-        <button onClick={resetQuiz} className="btn-reset">
-          リセット
-        </button>
-        {showCorrect && (
-          <div className="score">
-            正解: {correctCount} / {totalCells} ({Math.round(correctCount / totalCells * 100)}%)
-          </div>
-        )}
-      </div>
+      <QuizControls
+        onCheckAnswers={checkAnswers}
+        onReset={resetQuiz}
+        showCorrect={showCorrect}
+        correctCount={correctCount}
+        totalCells={totalCells}
+      />
 
       <div className="items-table-container">
         <table className="items-table">
@@ -246,30 +129,12 @@ export default function ItemQuiz() {
                   return (
                     <td key={colItem.id} className={showCorrect ? (isAnswerCorrect ? 'correct' : 'incorrect') : ''}>
                       {showCorrect && correctItem ? (
-                        <div className="result-cell">
-                          <img
-                            src={getItemIcon(correctItem.icon)}
-                            alt={correctItem.name}
-                            className="result-icon"
-                          />
-                          <span className="item-tooltip">{correctItem.name}</span>
-                          {userAnswer && !isAnswerCorrect && (
-                            <div className="user-answer">
-                              {allCombinedItemsList.find(i => i.id === userAnswer) && (
-                                <>
-                                  <img
-                                    src={getItemIcon(allCombinedItemsList.find(i => i.id === userAnswer).icon)}
-                                    alt="あなたの回答"
-                                    className="wrong-icon"
-                                  />
-                                  <span className="item-tooltip wrong">
-                                    {allCombinedItemsList.find(i => i.id === userAnswer).name}
-                                  </span>
-                                </>
-                              )}
-                            </div>
-                          )}
-                        </div>
+                        <QuizResultCell
+                          correctItem={correctItem}
+                          userAnswer={userAnswer}
+                          isCorrect={isAnswerCorrect}
+                          allItems={allCombinedItemsList}
+                        />
                       ) : (
                         <SearchableSelect
                           value={answers[code] || ''}
