@@ -1,6 +1,16 @@
-import { useState, useRef, useEffect } from 'react';
-import { baseItems, combinedItems } from '../data/items';
+import { useState, useRef, useEffect, useMemo } from 'react';
+import { baseItems, combinedItems, getCodeForPair, codeToItemPairMap } from '../data/items';
 import './ItemQuiz.css';
+
+// 配列をシャッフルするユーティリティ関数（Fisher-Yates）
+const shuffleArray = (array) => {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
 
 // アイコンのインポート関数
 const getItemIcon = (iconName) => {
@@ -108,22 +118,31 @@ function SearchableSelect({ value, onChange, items, placeholder, selectedItemIds
 }
 
 export default function ItemQuiz() {
-  // 各セルの回答を保存する状態（9x9のグリッド）
+  // 各セルの回答を保存する状態（1文字コードをキーとする）
+  // 例: { 'a': 'deathblade', 'b': 'giantslayer', ... }
   const [answers, setAnswers] = useState({});
   const [showCorrect, setShowCorrect] = useState(false);
 
-  const handleAnswerChange = (row, col, itemId) => {
-    const newAnswers = {
-      ...answers,
-      [`${row}-${col}`]: itemId
-    };
+  // 行と列の表示順序（シャッフルされたインデックス配列）
+  // 行と列で同じ順序を使用するため、1つの配列のみ保持
+  const [shuffledOrder, setShuffledOrder] = useState(() =>
+    shuffleArray([...Array(baseItems.length).keys()])
+  );
 
-    // 対称マス(col, row)も同時に埋める
-    if (row !== col) {
-      newAnswers[`${col}-${row}`] = itemId;
-    }
+  // シャッフルされた順序に基づいて表示用のbaseItemsを取得
+  const displayItems = useMemo(() =>
+    shuffledOrder.map(index => ({ ...baseItems[index], originalIndex: index })),
+    [shuffledOrder]
+  );
 
-    setAnswers(newAnswers);
+  const handleAnswerChange = (originalRowIndex, originalColIndex, itemId) => {
+    // 1文字コードを取得（正規化されたペアに対応）
+    const code = getCodeForPair(originalRowIndex, originalColIndex);
+
+    setAnswers(prev => ({
+      ...prev,
+      [code]: itemId
+    }));
   };
 
   const checkAnswers = () => {
@@ -133,15 +152,18 @@ export default function ItemQuiz() {
   const resetQuiz = () => {
     setAnswers({});
     setShowCorrect(false);
+    // 新しいシャッフル順序を生成
+    setShuffledOrder(shuffleArray([...Array(baseItems.length).keys()]));
   };
 
-  const getCorrectItem = (row, col) => {
-    return combinedItems[`${row}-${col}`];
+  const getCorrectItem = (originalRowIndex, originalColIndex) => {
+    return combinedItems[`${originalRowIndex}-${originalColIndex}`];
   };
 
-  const isCorrect = (row, col) => {
-    const correctItem = getCorrectItem(row, col);
-    return answers[`${row}-${col}`] === correctItem?.id;
+  const isCorrect = (originalRowIndex, originalColIndex) => {
+    const correctItem = getCorrectItem(originalRowIndex, originalColIndex);
+    const code = getCodeForPair(originalRowIndex, originalColIndex);
+    return answers[code] === correctItem?.id;
   };
 
   // 全ての合成アイテムのリスト（セレクトボックス用）
@@ -155,11 +177,14 @@ export default function ItemQuiz() {
   // 選択済みアイテムIDのリスト（重複除外）
   const selectedItemIds = [...new Set(Object.values(answers).filter(Boolean))];
 
-  // 正解数を計算（重複を除外: row <= col のセルのみカウント）
-  const correctCount = Object.keys(answers).filter(key => {
-    const [row, col] = key.split('-').map(Number);
-    // 重複を除外するため、row <= col のセルのみカウント
-    return row <= col && isCorrect(row, col);
+  // 正解数を計算（1文字コードをキーとしているため、自動的に重複なし）
+  const correctCount = Object.keys(answers).filter(code => {
+    // codeから元のペアを逆算して正解を確認
+    const pairKey = codeToItemPairMap[code];
+    if (!pairKey) return false;
+    const [row, col] = pairKey.split('-').map(Number);
+    const correctItem = getCorrectItem(row, col);
+    return answers[code] === correctItem?.id;
   }).length;
 
   // 重複を除外した総セル数（対角線+上三角のみ）
@@ -192,7 +217,7 @@ export default function ItemQuiz() {
           <thead>
             <tr>
               <th></th>
-              {baseItems.map(item => (
+              {displayItems.map(item => (
                 <th key={item.id}>
                   <div className="base-item">
                     <img src={getItemIcon(item.icon)} alt={item.name} title={item.name} />
@@ -202,21 +227,24 @@ export default function ItemQuiz() {
             </tr>
           </thead>
           <tbody>
-            {baseItems.map((rowItem, rowIndex) => (
+            {displayItems.map((rowItem) => (
               <tr key={rowItem.id}>
                 <td className="row-header">
                   <div className="base-item">
                     <img src={getItemIcon(rowItem.icon)} alt={rowItem.name} title={rowItem.name} />
                   </div>
                 </td>
-                {baseItems.map((colItem, colIndex) => {
-                  const cellKey = `${rowIndex}-${colIndex}`;
-                  const correctItem = getCorrectItem(rowIndex, colIndex);
-                  const userAnswer = answers[cellKey];
-                  const isAnswerCorrect = isCorrect(rowIndex, colIndex);
+                {displayItems.map((colItem) => {
+                  // 元のインデックスを使用して合成アイテムを取得
+                  const originalRowIndex = rowItem.originalIndex;
+                  const originalColIndex = colItem.originalIndex;
+                  const code = getCodeForPair(originalRowIndex, originalColIndex);
+                  const correctItem = getCorrectItem(originalRowIndex, originalColIndex);
+                  const userAnswer = answers[code];
+                  const isAnswerCorrect = isCorrect(originalRowIndex, originalColIndex);
 
                   return (
-                    <td key={colIndex} className={showCorrect ? (isAnswerCorrect ? 'correct' : 'incorrect') : ''}>
+                    <td key={colItem.id} className={showCorrect ? (isAnswerCorrect ? 'correct' : 'incorrect') : ''}>
                       {showCorrect && correctItem ? (
                         <div className="result-cell">
                           <img
@@ -244,8 +272,8 @@ export default function ItemQuiz() {
                         </div>
                       ) : (
                         <SearchableSelect
-                          value={answers[cellKey] || ''}
-                          onChange={(itemId) => handleAnswerChange(rowIndex, colIndex, itemId)}
+                          value={answers[code] || ''}
+                          onChange={(itemId) => handleAnswerChange(originalRowIndex, originalColIndex, itemId)}
                           items={allCombinedItemsList}
                           placeholder="?"
                           selectedItemIds={selectedItemIds}
