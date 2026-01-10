@@ -18,7 +18,7 @@ export const baseItems = [
 export const combinedItems = {
   // B.F.ソード (0) の組み合わせ
   '0-0': { id: 'deathblade', name: 'デスブレード', icon: 'deathblade.png', components: ['bfsword', 'bfsword'], hiragana: 'ですぶれーど', romaji: 'desuburedo' },
-  '0-1': { id: 'giantslayer', name: 'ジャイアント スレイヤー', icon: 'giantslayer.png', components: ['bfsword', 'recurvebow'], hiragana: 'じゃいあんとすれいやー', romaji: 'jaiansutosureiya' },
+  '0-1': { id: 'giantslayer', name: 'ジャイアント スレイヤー', icon: 'giantslayer.png', components: ['bfsword', 'recurvebow'], hiragana: 'じゃいあんとすれいやー', romaji: 'jaiantosureiyaa' },
   '0-2': { id: 'edgeofnight', name: 'ナイト エッジ', icon: 'edgeofnight.png', components: ['bfsword', 'chainvest'], hiragana: 'ないとえっじ', romaji: 'naitoejji' },
   '0-3': { id: 'bloodthirster', name: 'ブラッドサースター', icon: 'bloodthirster.png', components: ['bfsword', 'negatroncloak'], hiragana: 'ぶらっどさーすたー', romaji: 'buraddosasuta' },
   '0-4': { id: 'hextechgunblade', name: 'ヘクステック ガンブレード', icon: 'hextechgunblade.png', components: ['bfsword', 'needlesslylargerod'], hiragana: 'へくすてっくがんぶれーど', romaji: 'hekusutekkuganburedo' },
@@ -27,7 +27,7 @@ export const combinedItems = {
   '0-7': { id: 'infinityedge', name: 'インフィニティ エッジ', icon: 'infinityedge.png', components: ['bfsword', 'sparringgloves'], hiragana: 'いんふぃにてぃえっじ', romaji: 'infinitiejji' },
 
   // リカーブ ボウ (1) の組み合わせ
-  '1-0': { id: 'giantslayer', name: 'ジャイアント スレイヤー', icon: 'giantslayer.png', components: ['recurvebow', 'bfsword'], hiragana: 'じゃいあんとすれいやー', romaji: 'jaiansutosureiya' },
+  '1-0': { id: 'giantslayer', name: 'ジャイアント スレイヤー', icon: 'giantslayer.png', components: ['recurvebow', 'bfsword'], hiragana: 'じゃいあんとすれいやー', romaji: 'jaiantosureiyaa' },
   '1-1': { id: 'redsnifferscopulatorbuff', name: 'レッド バフ', icon: 'redsnifferscopulatorbuff.png', components: ['recurvebow', 'recurvebow'], hiragana: 'れっどばふ', romaji: 'reddobafu' },
   '1-2': { id: 'giantsvow', name: '巨人の誓い', icon: 'giantsvow.png', components: ['recurvebow', 'chainvest'], hiragana: 'きょじんのちかい', romaji: 'kyojinnochikai' },
   '1-3': { id: 'krakensfury', name: 'クラーケンの怒り', icon: 'runaanshurricane.png', components: ['recurvebow', 'negatroncloak'], hiragana: 'くらーけんのいかり', romaji: 'kurakennoikari' },
@@ -50,8 +50,8 @@ export const combinedItems = {
   '3-0': { id: 'bloodthirster', name: 'ブラッドサースター', icon: 'bloodthirster.png', components: ['negatroncloak', 'bfsword'], hiragana: 'ぶらっどさーすたー', romaji: 'buraddosasuta' },
   '3-1': { id: 'krakensfury', name: 'クラーケンの怒り', icon: 'runaanshurricane.png', components: ['negatroncloak', 'recurvebow'], hiragana: 'くらーけんのいかり', romaji: 'kurakennoikari' },
   '3-2': { id: 'gargoyle', name: 'ガーゴイル ストーンプレート', icon: 'gargoyle.png', components: ['negatroncloak', 'chainvest'], hiragana: 'がーごいるすとーんぷれーと', romaji: 'gagoirusutompureto' },
-  '3-3': { id: 'dragonsclaw', name: 'ドラゴン クロウ', icon: 'dragonsclaw.png', components: ['negatroncloak', 'negatroncloak'], hiragana: 'どらごんくろう', romaji: 'doragokuro' },
-  '3-4': { id: 'ionicspark', name: 'アイオニック スパーク', icon: 'ionicspark.png', components: ['negatroncloak', 'needlesslylargerod'], hiragana: 'いおにあすぱーく', romaji: 'ioniasupark' },
+  '3-3': { id: 'dragonsclaw', name: 'ドラゴン クロウ', icon: 'dragonsclaw.png', components: ['negatroncloak', 'negatroncloak'], hiragana: 'どらごんくろう', romaji: 'doragonkurou' },
+  '3-4': { id: 'ionicspark', name: 'アイオニック スパーク', icon: 'ionicspark.png', components: ['negatroncloak', 'needlesslylargerod'], hiragana: 'あいおにっくすぱーく', romaji: 'aionikkusupaaku' },
   '3-5': { id: 'adaptivehelm', name: 'アダプティブ ヘルム', icon: 'adaptivehelm.png', components: ['negatroncloak', 'tear'], hiragana: 'あだぷてぃぶへるむ', romaji: 'adaputibuherumu' },
   '3-6': { id: 'evenshroud', name: 'イーブン シュラウド', icon: 'evenshroud.png', components: ['negatroncloak', 'giantsbelt'], hiragana: 'いーぶんしゅらうど', romaji: 'ibunshuuraudo' },
   '3-7': { id: 'quicksilver', name: 'クイックシルバー', icon: 'quicksilver.png', components: ['negatroncloak', 'sparringgloves'], hiragana: 'くいっくしるばー', romaji: 'kuikkushiruba' },
@@ -60,21 +60,21 @@ export const combinedItems = {
   '4-0': { id: 'hextechgunblade', name: 'ヘクステック ガンブレード', icon: 'hextechgunblade.png', components: ['needlesslylargerod', 'bfsword'], hiragana: 'へくすてっくがんぶれーど', romaji: 'hekusutekkuganburedo' },
   '4-1': { id: 'guinsoosrageblade', name: 'グインソー レイジブレード', icon: 'guinsoosrageblade.png', components: ['needlesslylargerod', 'recurvebow'], hiragana: 'ぐいんそーれいじぶれーど', romaji: 'guinsorejjiburedo' },
   '4-2': { id: 'crownguard', name: 'クラウンガード', icon: 'crownguard.png', components: ['needlesslylargerod', 'chainvest'], hiragana: 'くらうんがーど', romaji: 'kuraungado' },
-  '4-3': { id: 'ionicspark', name: 'アイオニック スパーク', icon: 'ionicspark.png', components: ['needlesslylargerod', 'negatroncloak'], hiragana: 'いおにあすぱーく', romaji: 'ioniasupark' },
+  '4-3': { id: 'ionicspark', name: 'アイオニック スパーク', icon: 'ionicspark.png', components: ['needlesslylargerod', 'negatroncloak'], hiragana: 'あいおにっくすぱーく', romaji: 'aionikkusupaaku' },
   '4-4': { id: 'rabadons', name: 'ラバドン デスキャップ', icon: 'rabadons.png', components: ['needlesslylargerod', 'needlesslylargerod'], hiragana: 'らばどんですきゃっぷ', romaji: 'rabadondesukyappu' },
-  '4-5': { id: 'archangels', name: 'アークエンジェル スタッフ', icon: 'archangels.png', components: ['needlesslylargerod', 'tear'], hiragana: 'だいてんしのつえ', romaji: 'daitenshinotsue' },
+  '4-5': { id: 'archangels', name: 'アークエンジェル スタッフ', icon: 'archangels.png', components: ['needlesslylargerod', 'tear'], hiragana: 'あーくえんじぇるすたっふ', romaji: 'aakuenjerusutaffu' },
   '4-6': { id: 'morellonomicon', name: 'モレロノミコン', icon: 'morellonomicon.png', components: ['needlesslylargerod', 'giantsbelt'], hiragana: 'もれろのみこん', romaji: 'moreronomikon' },
-  '4-7': { id: 'jeweledgauntlet', name: 'ジュエル ガントレット', icon: 'jeweledgauntlet.png', components: ['needlesslylargerod', 'sparringgloves'], hiragana: 'じゅえるどがんとれっと', romaji: 'juerudogantoretto' },
+  '4-7': { id: 'jeweledgauntlet', name: 'ジュエル ガントレット', icon: 'jeweledgauntlet.png', components: ['needlesslylargerod', 'sparringgloves'], hiragana: 'じゅえるがんとれっと', romaji: 'juerugantoretto' },
 
   // 女神の涙 (5) の組み合わせ
   '5-0': { id: 'spearofshojin', name: 'ショウジンの矛', icon: 'spearofshojin.png', components: ['tear', 'bfsword'], hiragana: 'しょうじんのほこ', romaji: 'shoujinnohoko' },
   '5-1': { id: 'voidstaff', name: 'ヴォイド スタッフ', icon: 'statikkshiv.png', components: ['tear', 'recurvebow'], hiragana: 'ゔぉいどすたっふ', romaji: 'voidosutaffu' },
   '5-2': { id: 'protectorsvow', name: 'プロテクターの誓い', icon: 'protectorsvow.png', components: ['tear', 'chainvest'], hiragana: 'ぷろてくたーのちかい', romaji: 'purotekutanochikai' },
   '5-3': { id: 'adaptivehelm', name: 'アダプティブ ヘルム', icon: 'adaptivehelm.png', components: ['tear', 'negatroncloak'], hiragana: 'あだぷてぃぶへるむ', romaji: 'adaputibuherumu' },
-  '5-4': { id: 'archangels', name: 'アークエンジェル スタッフ', icon: 'archangels.png', components: ['tear', 'needlesslylargerod'], hiragana: 'だいてんしのつえ', romaji: 'daitenshinotsue' },
+  '5-4': { id: 'archangels', name: 'アークエンジェル スタッフ', icon: 'archangels.png', components: ['tear', 'needlesslylargerod'], hiragana: 'あーくえんじぇるすたっふ', romaji: 'aakuenjerusutaffu' },
   '5-5': { id: 'bluebuff', name: 'ブルー バフ', icon: 'bluebuff.png', components: ['tear', 'tear'], hiragana: 'ぶるーばふ', romaji: 'burubafu' },
   '5-6': { id: 'spiritvisage', name: 'スピリット ビサージュ', icon: 'spiritvisage.png', components: ['tear', 'giantsbelt'], hiragana: 'すぴりっとびさーじゅ', romaji: 'supirittobisaju' },
-  '5-7': { id: 'handofjustice', name: 'ハンド オブ ジャスティス', icon: 'handofjustice.png', components: ['tear', 'sparringgloves'], hiragana: 'じゃすてぃすはんど', romaji: 'jasutisuhando' },
+  '5-7': { id: 'handofjustice', name: 'ハンド オブ ジャスティス', icon: 'handofjustice.png', components: ['tear', 'sparringgloves'], hiragana: 'はんどおぶじゃすてぃす', romaji: 'handoobujasutisu' },
 
   // ジャイアント ベルト (6) の組み合わせ
   '6-0': { id: 'steraksgage', name: 'ステラックの篭手', icon: 'steraksgage.png', components: ['giantsbelt', 'bfsword'], hiragana: 'すてらっくのこて', romaji: 'suterakkunokote' },
@@ -91,8 +91,8 @@ export const combinedItems = {
   '7-1': { id: 'lastwhisper', name: 'ラスト ウィスパー', icon: 'lastwhisper.png', components: ['sparringgloves', 'recurvebow'], hiragana: 'らすとうぃすぱー', romaji: 'rasutouisupa' },
   '7-2': { id: 'steadfastheart', name: '揺るがぬ心', icon: 'steadfastheart.png', components: ['sparringgloves', 'chainvest'], hiragana: 'ゆるがぬこころ', romaji: 'yuruganukokoro' },
   '7-3': { id: 'quicksilver', name: 'クイックシルバー', icon: 'quicksilver.png', components: ['sparringgloves', 'negatroncloak'], hiragana: 'くいっくしるばー', romaji: 'kuikkushiruba' },
-  '7-4': { id: 'jeweledgauntlet', name: 'ジュエル ガントレット', icon: 'jeweledgauntlet.png', components: ['sparringgloves', 'needlesslylargerod'], hiragana: 'じゅえるどがんとれっと', romaji: 'juerudogantoretto' },
-  '7-5': { id: 'handofjustice', name: 'ハンド オブ ジャスティス', icon: 'handofjustice.png', components: ['sparringgloves', 'tear'], hiragana: 'じゃすてぃすはんど', romaji: 'jasutisuhando' },
+  '7-4': { id: 'jeweledgauntlet', name: 'ジュエル ガントレット', icon: 'jeweledgauntlet.png', components: ['sparringgloves', 'needlesslylargerod'], hiragana: 'じゅえるがんとれっと', romaji: 'juerugantoretto' },
+  '7-5': { id: 'handofjustice', name: 'ハンド オブ ジャスティス', icon: 'handofjustice.png', components: ['sparringgloves', 'tear'], hiragana: 'はんどおぶじゃすてぃす', romaji: 'handoobujasutisu' },
   '7-6': { id: 'strikersflail', name: 'ストライカーフレイル', icon: 'strikersflail.png', components: ['sparringgloves', 'giantsbelt'], hiragana: 'すとらいかーふれいる', romaji: 'sutoraikafureiru' },
   '7-7': { id: 'thiefsgloves', name: '盗賊のグローブ', icon: 'thiefsgloves.png', components: ['sparringgloves', 'sparringgloves'], hiragana: 'とうぞくのてぶくろ', romaji: 'touzokunotebukuro' },
 };

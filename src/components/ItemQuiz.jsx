@@ -12,19 +12,35 @@ const getItemIcon = (iconName) => {
 };
 
 // 検索可能なセレクトボックスコンポーネント
-function SearchableSelect({ value, onChange, items, placeholder }) {
+function SearchableSelect({ value, onChange, items, placeholder, selectedItemIds = [] }) {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState('');
   const dropdownRef = useRef(null);
 
-  const filteredItems = items.filter(item => {
-    const searchLower = search.toLowerCase();
-    return (
-      item.name.toLowerCase().includes(searchLower) ||
-      (item.hiragana && item.hiragana.includes(searchLower)) ||
-      (item.romaji && item.romaji.toLowerCase().includes(searchLower))
-    );
-  });
+  // フィルタリング後、あいうえお順でソートし、選択済みアイテムは後ろに配置
+  const filteredItems = items
+    .filter(item => {
+      const searchLower = search.toLowerCase();
+      return (
+        item.name.toLowerCase().includes(searchLower) ||
+        (item.hiragana && item.hiragana.includes(searchLower)) ||
+        (item.romaji && item.romaji.toLowerCase().includes(searchLower))
+      );
+    })
+    .sort((a, b) => {
+      const aSelected = selectedItemIds.includes(a.id);
+      const bSelected = selectedItemIds.includes(b.id);
+
+      // 選択済みアイテムは後ろに
+      if (aSelected !== bSelected) {
+        return aSelected ? 1 : -1;
+      }
+
+      // 同じグループ内ではあいうえお順（hiraganaでソート）
+      const aHiragana = a.hiragana || '';
+      const bHiragana = b.hiragana || '';
+      return aHiragana.localeCompare(bHiragana, 'ja');
+    });
 
   const selectedItem = items.find(item => item.id === value);
 
@@ -67,20 +83,23 @@ function SearchableSelect({ value, onChange, items, placeholder }) {
             autoFocus
           />
           <div className="options-list">
-            {filteredItems.map(item => (
-              <div
-                key={item.id}
-                className={`option ${value === item.id ? 'selected' : ''}`}
-                onClick={() => {
-                  onChange(item.id);
-                  setIsOpen(false);
-                  setSearch('');
-                }}
-              >
-                <img src={getItemIcon(item.icon)} alt={item.name} />
-                <span>{item.name}</span>
-              </div>
-            ))}
+            {filteredItems.map(item => {
+              const isAlreadySelected = selectedItemIds.includes(item.id);
+              return (
+                <div
+                  key={item.id}
+                  className={`option ${value === item.id ? 'selected' : ''} ${isAlreadySelected ? 'already-selected' : ''}`}
+                  onClick={() => {
+                    onChange(item.id);
+                    setIsOpen(false);
+                    setSearch('');
+                  }}
+                >
+                  <img src={getItemIcon(item.icon)} alt={item.name} />
+                  <span>{item.name}</span>
+                </div>
+              );
+            })}
           </div>
         </div>
       )}
@@ -132,6 +151,9 @@ export default function ItemQuiz() {
     }
     return acc;
   }, []);
+
+  // 選択済みアイテムIDのリスト（重複除外）
+  const selectedItemIds = [...new Set(Object.values(answers).filter(Boolean))];
 
   // 正解数を計算（重複を除外: row <= col のセルのみカウント）
   const correctCount = Object.keys(answers).filter(key => {
@@ -194,7 +216,7 @@ export default function ItemQuiz() {
                   const isAnswerCorrect = isCorrect(rowIndex, colIndex);
 
                   return (
-                    <td key={colIndex} className={showCorrect ? (isAnswerCorrect ? 'correct' : userAnswer ? 'incorrect' : '') : ''}>
+                    <td key={colIndex} className={showCorrect ? (isAnswerCorrect ? 'correct' : 'incorrect') : ''}>
                       {showCorrect && correctItem ? (
                         <div className="result-cell">
                           <img
@@ -226,6 +248,7 @@ export default function ItemQuiz() {
                           onChange={(itemId) => handleAnswerChange(rowIndex, colIndex, itemId)}
                           items={allCombinedItemsList}
                           placeholder="?"
+                          selectedItemIds={selectedItemIds}
                         />
                       )}
                     </td>
