@@ -104,3 +104,35 @@ export const allCombinedItems = Object.values(
     return acc;
   }, {})
 );
+
+// 素材アイテムのペアと1文字コードの対応表
+// キー: "baseIndex1-baseIndex2" (baseIndex1 <= baseIndex2 で正規化)
+// 値: 1文字コード（0-9, a-z の36文字）
+// この対応表により、表の位置に依存せず回答を管理でき、cookie保存にも適している
+const codeChars = '0123456789abcdefghijklmnopqrstuvwxyz';
+export const itemPairCodeMap = {};
+export const codeToItemPairMap = {};
+
+let codeIndex = 0;
+for (let i = 0; i < baseItems.length; i++) {
+  for (let j = i; j < baseItems.length; j++) {
+    const pairKey = `${i}-${j}`;
+    const code = codeChars[codeIndex];
+    itemPairCodeMap[pairKey] = code;
+    codeToItemPairMap[code] = pairKey;
+    codeIndex++;
+  }
+}
+
+// 正規化されたペアキーを取得（行と列のインデックスから、常に小さい方を先にしたキーを返す）
+export const getNormalizedPairKey = (rowIndex, colIndex) => {
+  const minIdx = Math.min(rowIndex, colIndex);
+  const maxIdx = Math.max(rowIndex, colIndex);
+  return `${minIdx}-${maxIdx}`;
+};
+
+// ペアキーから1文字コードを取得
+export const getCodeForPair = (rowIndex, colIndex) => {
+  const pairKey = getNormalizedPairKey(rowIndex, colIndex);
+  return itemPairCodeMap[pairKey];
+};
