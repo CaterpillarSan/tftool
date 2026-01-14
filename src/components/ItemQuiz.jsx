@@ -9,6 +9,14 @@ import './ItemQuiz.css';
 const COOKIE_ANSWERS = 'quiz_answers';
 const COOKIE_ORDER = 'quiz_order';
 
+// 全ての合成アイテムのリスト（静的データなのでコンポーネント外で生成）
+const allCombinedItemsList = Object.values(combinedItems).reduce((acc, item) => {
+  if (!acc.find(i => i.id === item.id)) {
+    acc.push(item);
+  }
+  return acc;
+}, []);
+
 // 新しいシャッフル順序を生成してcookieに保存
 const generateAndSaveShuffledOrder = () => {
   const newOrder = shuffleArray([...Array(baseItems.length).keys()]);
@@ -68,26 +76,22 @@ export default function ItemQuiz() {
     return answers[code] === correctItem?.id;
   };
 
-  // 全ての合成アイテムのリスト（セレクトボックス用）
-  const allCombinedItemsList = Object.values(combinedItems).reduce((acc, item) => {
-    if (!acc.find(i => i.id === item.id)) {
-      acc.push(item);
-    }
-    return acc;
-  }, []);
-
   // 選択済みアイテムIDのリスト（重複除外）
-  const selectedItemIds = [...new Set(Object.values(answers).filter(Boolean))];
+  const selectedItemIds = useMemo(
+    () => [...new Set(Object.values(answers).filter(Boolean))],
+    [answers]
+  );
 
   // 正解数を計算（1文字コードをキーとしているため、自動的に重複なし）
-  const correctCount = Object.keys(answers).filter(code => {
-    // codeから元のペアを逆算して正解を確認
-    const pairKey = codeToItemPairMap[code];
-    if (!pairKey) return false;
-    const [row, col] = pairKey.split('-').map(Number);
-    const correctItem = getCorrectItem(row, col);
-    return answers[code] === correctItem?.id;
-  }).length;
+  const correctCount = useMemo(() => {
+    return Object.keys(answers).filter(code => {
+      const pairKey = codeToItemPairMap[code];
+      if (!pairKey) return false;
+      const [row, col] = pairKey.split('-').map(Number);
+      const correctItem = combinedItems[getCodeForPair(row, col)];
+      return answers[code] === correctItem?.id;
+    }).length;
+  }, [answers]);
 
   // 重複を除外した総セル数（対角線+上三角のみ）
   // 8x8グリッドで row <= col のセル数: 8 + 7 + 6 + 5 + 4 + 3 + 2 + 1 = 36
