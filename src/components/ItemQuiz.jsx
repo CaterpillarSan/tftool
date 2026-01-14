@@ -1,22 +1,36 @@
 import { useState, useMemo } from 'react';
 import { baseItems, combinedItems, getCodeForPair, codeToItemPairMap } from '../data/items';
-import { shuffleArray, getItemIcon } from '../utils/itemUtils';
+import { shuffleArray, getItemIcon, getCookie, setCookie, deleteCookie } from '../utils/itemUtils';
 import SearchableSelect from './SearchableSelect';
 import QuizControls from './QuizControls';
 import QuizResultCell from './QuizResultCell';
 import './ItemQuiz.css';
 
+const COOKIE_ANSWERS = 'quiz_answers';
+const COOKIE_ORDER = 'quiz_order';
+
+// 新しいシャッフル順序を生成してcookieに保存
+const generateAndSaveShuffledOrder = () => {
+  const newOrder = shuffleArray([...Array(baseItems.length).keys()]);
+  setCookie(COOKIE_ORDER, newOrder);
+  return newOrder;
+};
+
 export default function ItemQuiz() {
   // 各セルの回答を保存する状態（1文字コードをキーとする）
   // 例: { 'a': 'deathblade', 'b': 'giantslayer', ... }
-  const [answers, setAnswers] = useState({});
+  const [answers, setAnswers] = useState(() => getCookie(COOKIE_ANSWERS) || {});
   const [showCorrect, setShowCorrect] = useState(false);
 
   // 行と列の表示順序（シャッフルされたインデックス配列）
   // 行と列で同じ順序を使用するため、1つの配列のみ保持
-  const [shuffledOrder, setShuffledOrder] = useState(() =>
-    shuffleArray([...Array(baseItems.length).keys()])
-  );
+  const [shuffledOrder, setShuffledOrder] = useState(() => {
+    const savedOrder = getCookie(COOKIE_ORDER);
+    if (savedOrder && Array.isArray(savedOrder) && savedOrder.length === baseItems.length) {
+      return savedOrder;
+    }
+    return generateAndSaveShuffledOrder();
+  });
 
   // シャッフルされた順序に基づいて表示用のbaseItemsを取得
   const displayItems = useMemo(() =>
@@ -27,11 +41,9 @@ export default function ItemQuiz() {
   const handleAnswerChange = (originalRowIndex, originalColIndex, itemId) => {
     // 1文字コードを取得（正規化されたペアに対応）
     const code = getCodeForPair(originalRowIndex, originalColIndex);
-
-    setAnswers(prev => ({
-      ...prev,
-      [code]: itemId
-    }));
+    const newAnswers = { ...answers, [code]: itemId };
+    setAnswers(newAnswers);
+    setCookie(COOKIE_ANSWERS, newAnswers);
   };
 
   const checkAnswers = () => {
@@ -41,8 +53,8 @@ export default function ItemQuiz() {
   const resetQuiz = () => {
     setAnswers({});
     setShowCorrect(false);
-    // 新しいシャッフル順序を生成
-    setShuffledOrder(shuffleArray([...Array(baseItems.length).keys()]));
+    setShuffledOrder(generateAndSaveShuffledOrder());
+    deleteCookie(COOKIE_ANSWERS);
   };
 
   const getCorrectItem = (originalRowIndex, originalColIndex) => {
