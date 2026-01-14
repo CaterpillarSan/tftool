@@ -46,7 +46,8 @@ export default function ItemQuiz() {
   };
 
   const getCorrectItem = (originalRowIndex, originalColIndex) => {
-    return combinedItems[`${originalRowIndex}-${originalColIndex}`];
+    const code = getCodeForPair(originalRowIndex, originalColIndex);
+    return combinedItems[code];
   };
 
   const isCorrect = (originalRowIndex, originalColIndex) => {
