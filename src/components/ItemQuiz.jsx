@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { baseItems, combinedItems, getCodeForPair, codeToItemPairMap } from '../data/items';
 import { shuffleArray, getItemIcon, getCookie, setCookie, deleteCookie } from '../utils/itemUtils';
 import SearchableSelect from './SearchableSelect';
@@ -99,6 +100,7 @@ export default function ItemQuiz() {
 
   return (
     <div className="item-quiz">
+      <Link to="/" className="back-link">&larr; トップに戻る</Link>
       <h1>TFT Set 16 アイテム構成表クイズ</h1>
       <p className="description">
         基本アイテムの組み合わせから作られる合成アイテムを当ててください。
