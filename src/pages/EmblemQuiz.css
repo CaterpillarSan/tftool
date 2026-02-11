@@ -1,0 +1,229 @@
+.emblem-quiz {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.emblem-quiz .back-link {
+  display: inline-block;
+  color: #555;
+  text-decoration: none;
+  font-size: 14px;
+  margin-bottom: 0.5rem;
+  text-align: left;
+  width: 100%;
+}
+
+.emblem-quiz .back-link:hover {
+  color: #1a1a2e;
+}
+
+.emblem-quiz h1 {
+  text-align: center;
+  color: #1a1a2e;
+  margin-bottom: 10px;
+}
+
+.emblem-description {
+  text-align: center;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.emblem-options {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.unique-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #555;
+  user-select: none;
+}
+
+.unique-toggle input {
+  cursor: pointer;
+}
+
+.emblem-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.emblem-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.emblem-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 8px;
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  min-width: 0;
+}
+
+.emblem-card.correct {
+  border-color: #4CAF50;
+  background: #e8f5e9;
+}
+
+.emblem-card.incorrect {
+  border-color: #f44336;
+  background: #ffebee;
+}
+
+.emblem-icon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  background: #1a1a2e;
+  border-radius: 50%;
+  padding: 6px;
+}
+
+.emblem-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.correct-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+}
+
+.wrong-answer {
+  font-size: 11px;
+  color: #f44336;
+  text-decoration: line-through;
+}
+
+/* TraitSelect styles */
+.trait-select {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.trait-select-trigger {
+  width: 100%;
+  padding: 4px 2px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  background: #fff;
+  min-height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s;
+  font-size: 12px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.trait-select-trigger:hover {
+  border-color: #4CAF50;
+}
+
+.trait-selected-name {
+  color: #333;
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.trait-placeholder {
+  color: #ccc;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.trait-select-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border: 2px solid #4CAF50;
+  border-radius: 5px;
+  margin-top: 4px;
+  z-index: 1000;
+  max-height: 300px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.trait-search-input {
+  padding: 8px;
+  border: none;
+  border-bottom: 2px solid #ddd;
+  font-size: 14px;
+  outline: none;
+}
+
+.trait-search-input:focus {
+  border-bottom-color: #4CAF50;
+}
+
+.trait-options-list {
+  overflow-y: auto;
+  max-height: 250px;
+}
+
+.trait-option {
+  padding: 8px 10px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #333;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.15s;
+}
+
+.trait-option:hover {
+  background: #f0f0f0;
+}
+
+.trait-option.selected {
+  background: #e8f5e9;
+}
+
+.trait-option.already-selected {
+  opacity: 0.4;
+  background: #f5f5f5;
+}
+
+@media (max-width: 768px) {
+  .emblem-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 8px;
+  }
+
+  .emblem-card {
+    padding: 8px 4px;
+  }
+
+  .emblem-icon {
+    width: 40px;
+    height: 40px;
+  }
+}
